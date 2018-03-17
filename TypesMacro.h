@@ -23,6 +23,11 @@
 
 
 
+
+#define STRONG(object)                 __strong __typeof__(object) STRONG_ ##object = object
+#define WEAK(object)                   __weak __typeof__(object) WEAK_ ##object = object
+
+
 #define IS_VALID(_obj_, _class_)       (_obj_ != nil && [_obj_ isKindOfClass:_class_.class])
 #define IS_ARRAY(_obj_)                IS_VALID(_obj_, NSArray)
 #define IS_ARRAY_1(_obj_)              (IS_ARRAY(_obj_) && ((NSArray *)_obj_).count > 0)
@@ -47,6 +52,18 @@
 #define IS_UINT_1(_obj_)               (IS_NUMBER(_obj_) && ((NSNumber *)_obj_).unsignedIntegerValue > 0)
 #define IS_URL(_obj_)                  IS_VALID(_obj_, NSURL)
 #define IS_URL_1(_obj_)                (IS_URL(_obj_) && ((NSURL *)_obj_).absoluteString.length > 0)
+
+
+#define ARRAY_OR_NIL(_value_)          ((NSArray *)(IS_ARRAY_1(_value_) ? (_value_) : nil))
+#define DICT_OR_NIL(_value_)           ((NSDictionary *)(IS_DICT_1(_value_) ? (_value_) : nil))
+#define STRING_OR_NIL(_value_)         ((NSString *)(IS_STRING_1(_value_) ? (_value_) : nil))
+
+
+#define SAFE_ARRAY(_value_)            (IS_ARRAY(_value_) ? (_value_) : @[])
+#define SAFE_DICT(_value_)             (IS_DICT(_value_) ? (_value_) : @{})
+#define SAFE_NUMBER(_value_)           (IS_NUMBER(_value_) ? (_value_) : @0)
+#define SAFE_STRING(_value_)           (IS_STRING(_value_) ? (_value_) : @"")
+
 
 
 
